@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Study Buddy</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h1>Study Buddy</h1>
+
+  <p>Enter your subjects and how many days are left until the exam.</p>
+
+  <div class="input-area">
+    <input id="subjectInput" type="text" placeholder="Subject name">
+    <input id="daysInput" type="number" placeholder="Days until exam">
+    <button onclick="addSubject()">Add</button>
+  </div>
+
+  <h2>Your Subjects</h2>
+  <div id="subjectsList"></div>
+
+  <h2>Daily Study Plan</h2>
+  <div id="studyPlan"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+body {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.input-area {
+  margin-bottom: 15px;
+}
+
+input, button {
+  padding: 8px;
+  margin: 5px;
+}
+
+#subjectsList, #studyPlan {
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+let subjects = [];
+
+function addSubject() {
+  let subject = document.getElementById("subjectInput").value;
+  let days = document.getElementById("daysInput").value;
+
+  if (subject === "" || days === "") return;
+
+  subjects.push({ name: subject, days: Number(days) });
+  document.getElementById("subjectInput").value = "";
+  document.getElementById("daysInput").value = "";
+
+  displaySubjects();
+  generatePlan();
+}
+
+function displaySubjects() {
+  let list = document.getElementById("subjectsList");
+  list.innerHTML = "";
+  subjects.forEach(s => {
+    let item = document.createElement("div");
+    item.textContent = s.name + " - " + s.days + " days left";
+    list.appendChild(item);
+  });
+}
+
+function generatePlan() {
+  let plan = document.getElementById("studyPlan");
+  plan.innerHTML = "";
+  subjects.forEach(s => {
+    let item = document.createElement("div");
+    item.textContent = "Study " + s.name + " for about 1 chapter per day.";
+    plan.appendChild(item);
+  });
+}
